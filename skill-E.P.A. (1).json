@@ -1,0 +1,276 @@
+{
+  "name": "E.P.A.",
+  "intents": [
+    {
+      "intent": "notbleeding",
+      "examples": [
+        {
+          "text": "The person is not bleeding"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "stable",
+      "examples": [
+        {
+          "text": "Help"
+        }
+      ]
+    },
+    {
+      "intent": "notstable",
+      "examples": [
+        {
+          "text": "send help please"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "bleeding",
+      "examples": [
+        {
+          "text": "The person is bleeding"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "notcon",
+      "examples": [
+        {
+          "text": "The person is not conscious"
+        }
+      ],
+      "description": "cons"
+    },
+    {
+      "intent": "iscon",
+      "examples": [
+        {
+          "text": "The person is conscious"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "ineedhelp",
+      "examples": [
+        {
+          "text": "I need help"
+        }
+      ],
+      "description": "1help"
+    },
+    {
+      "intent": "breathing",
+      "examples": [
+        {
+          "text": "The person is not breathing"
+        }
+      ]
+    }
+  ],
+  "entities": [],
+  "language": "en",
+  "metadata": {
+    "api_version": {
+      "major_version": "v1",
+      "minor_version": "2018-09-20"
+    }
+  },
+  "description": "",
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "title": "Is the person breathing?",
+            "options": [
+              {
+                "label": "yes",
+                "value": {
+                  "input": {
+                    "text": "The person is breathing"
+                  }
+                }
+              },
+              {
+                "label": "no",
+                "value": {
+                  "input": {
+                    "text": "The person is not breathing"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "node_2_1561816834825",
+      "metadata": {},
+      "conditions": "#notcon",
+      "dialog_node": "node_5_1561819157309"
+    },
+    {
+      "type": "standard",
+      "title": "breathing",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Begin CPR to stabilize condition."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "title": "CPR Instruction",
+            "source": "https://images-prod.healthline.com/hlcmsresource/images/topic_centers/2018-8/7661-cpr-hand-position-1296x728-body.jpg",
+            "description": "CPR Instruction Sheet",
+            "response_type": "image"
+          }
+        ]
+      },
+      "parent": "node_5_1561819157309",
+      "metadata": {},
+      "conditions": "#breathing",
+      "dialog_node": "node_6_1561819608826"
+    },
+    {
+      "type": "standard",
+      "title": "conscious",
+      "output": {
+        "generic": [
+          {
+            "title": "is the person conscious?",
+            "options": [
+              {
+                "label": "no",
+                "value": {
+                  "input": {
+                    "text": "The person is not conscious"
+                  }
+                }
+              },
+              {
+                "label": "yes",
+                "value": {
+                  "input": {
+                    "text": "The person is conscious"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "Welcome",
+      "metadata": {},
+      "conditions": "#ineedhelp",
+      "dialog_node": "node_2_1561816834825"
+    },
+    {
+      "type": "standard",
+      "title": "stable",
+      "output": {
+        "generic": [
+          {
+            "title": "Is the person stable?",
+            "options": [
+              {
+                "label": "yes",
+                "value": {
+                  "input": {
+                    "text": ":)"
+                  }
+                }
+              },
+              {
+                "label": "no",
+                "value": {
+                  "input": {
+                    "text": "Help is on the way."
+                  }
+                }
+              }
+            ],
+            "description": "",
+            "response_type": "option"
+          }
+        ]
+      },
+      "metadata": {},
+      "conditions": "#stable",
+      "dialog_node": "node_7_1561819810036",
+      "previous_sibling": "Anything else"
+    },
+    {
+      "type": "standard",
+      "title": "Anything else",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I didn't understand. You can try rephrasing."
+              },
+              {
+                "text": "Can you reword your statement? I'm not understanding."
+              },
+              {
+                "text": "I didn't get your meaning."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "metadata": {},
+      "conditions": "no help is needed",
+      "dialog_node": "Anything else",
+      "previous_sibling": "Welcome"
+    },
+    {
+      "type": "standard",
+      "title": "Welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "welcom yo e"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_2_1561816834825"
+      },
+      "conditions": "welcome",
+      "dialog_node": "Welcome"
+    }
+  ],
+  "workspace_id": "236f2f8f-82d3-4350-b2a0-f9f5f6eadcb2",
+  "counterexamples": [],
+  "system_settings": {
+    "tooling": {
+      "store_generic_responses": true
+    }
+  },
+  "learning_opt_out": false,
+  "status": "Available"
+}
